@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Adapter
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.airbnb.lottie.LottieAnimationView
+import com.mig35.carousellayoutmanager.CarouselLayoutManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -13,11 +17,15 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     lateinit var adapater: NewsAdapater
     lateinit var recyclerView: RecyclerView
+    lateinit var animeview:LottieAnimationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView=findViewById(R.id.recycler1)
+        animeview=findViewById(R.id.lottie1)
+        animeview.isVisible=true
         getnews()
+
     }
 
     fun getnews(){
@@ -26,9 +34,10 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<news>, response: Response<news>) {
                 val data=response.body()
                 if (data != null) {
+                    animeview.isVisible=false
                  adapater= NewsAdapater(this@MainActivity,data.articles)
                     recyclerView.adapter=adapater
-                    recyclerView.layoutManager=LinearLayoutManager(this@MainActivity)
+                   recyclerView.layoutManager=LinearLayoutManager(this@MainActivity)
                 }
                 else{
                     Log.d("fenil1","null")

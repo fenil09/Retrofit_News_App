@@ -17,13 +17,10 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     lateinit var adapater: NewsAdapater
     lateinit var recyclerView: RecyclerView
-    lateinit var animeview:LottieAnimationView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         recyclerView=findViewById(R.id.recycler1)
-        animeview=findViewById(R.id.lottie1)
-        animeview.isVisible=true
         getnews()
 
     }
@@ -34,7 +31,6 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<news>, response: Response<news>) {
                 val data=response.body()
                 if (data != null) {
-                    animeview.isVisible=false
                  adapater= NewsAdapater(this@MainActivity,data.articles)
                     recyclerView.adapter=adapater
                    recyclerView.layoutManager=LinearLayoutManager(this@MainActivity)
